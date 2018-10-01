@@ -27,8 +27,6 @@ public class HomeController  {
 	public String home(ModelMap model, HttpServletRequest req) throws UnknownHostException {
 	   System.out.println("on controller");
 	   DataEngine.getInstance(checkLocal(req));
-//	   int status = DataEngine.getInstance().getDao().updateCulumUserRequest();
-//	   System.out.println("status: "+ status);
 		return "home";
 	}
    

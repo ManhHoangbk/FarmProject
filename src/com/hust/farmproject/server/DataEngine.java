@@ -2,6 +2,8 @@ package com.hust.farmproject.server;
 
 import java.io.Serializable;
 
+import com.hust.farmproject.model.Config;
+
 import common.jdbc.JdbcConnectionPool;
 import common.jdbc.JdbcParameter;
 
@@ -10,11 +12,8 @@ public class DataEngine implements Serializable {
 	 * 
 	 * 
 	 */
-	private static String DB_NAME = "FarmProject";
 	private static final long serialVersionUID = 1L;
 	private static DataEngine INSTANCE;
-	
-	public static boolean IS_LOCAL = true;
 	
 	// config
 	private String dbAddr;
@@ -32,7 +31,6 @@ public class DataEngine implements Serializable {
 	private DAO dao = null;
 
 	public static DataEngine getInstance() {
-		System.out.println("isLocal: "+ IS_LOCAL);
 		if (INSTANCE == null) {
 			INSTANCE = new DataEngine();
 		}
@@ -40,7 +38,7 @@ public class DataEngine implements Serializable {
 	}
 	
 	public static DataEngine getInstance(boolean isLocal) {
-		IS_LOCAL = isLocal;
+		Config.IS_LOCAL = isLocal;
 		if (INSTANCE == null) {
 			INSTANCE = new DataEngine();
 		}
@@ -58,17 +56,11 @@ public class DataEngine implements Serializable {
 			e.printStackTrace();
 		}
 		try {
-			if(IS_LOCAL){
-				this.dbAddr = "jdbc:mysql://localhost:3306/" + DB_NAME + "?useUnicode=true&characterEncoding=UTF-8";
+				this.dbAddr = Config.URL_BASE + Config.DB_NAME + "?useUnicode=true&characterEncoding=UTF-8";
 				this.dbUser = "root";
 				this.dbPass = "1";
-			}else{
-				this.dbAddr = "jdbc:mysql://202.191.56.160:3306/"+ DB_NAME +"?useUnicode=true&characterEncoding=UTF-8";
-				this.dbUser = "root";
-				this.dbPass = "123456aA@";
-			}
 			this.dbPort = "3306";
-			this.dbName = DB_NAME;
+			this.dbName = Config.DB_NAME;
 			this.maxConn = 1000;
 			this.clearPeriod = 0;
 
@@ -91,7 +83,7 @@ public class DataEngine implements Serializable {
 	public static String createDB(){
 		try {
 			CreateDB createDB = new CreateDB();
-			createDB.createDB(IS_LOCAL);
+			createDB.createDB(Config.IS_LOCAL);
 			return "ok";
 		} catch (Exception e) {
 			return "createDB: "+ e;

@@ -5,16 +5,15 @@ public class DeviceInfo {
 	private Long id;
 	private String name;
 	
-	public DeviceInfo() {
-		
+	public static String createTable() {
+		String myTableName = "CREATE TABLE IF NOT EXISTS DeviceInfo (" 
+				+ "id BIGINT(20) NOT NULL ," 
+				+ "name VARCHAR(60) ,"
+				+ "PRIMARY KEY(id))";
+		return myTableName;
 	}
 	
-	public static String createTable(){
-		 String myTableName = "CREATE TABLE DeviceInfo (" 
-	              + "id BIGINT(20) NOT NULL ,"  
-	              + "name VARCHAR(60) ," 
-	              + "PRIMARY KEY(id))";  
-		 return myTableName;
+	public DeviceInfo() {
 	}
 	
 	public Long getId() {
