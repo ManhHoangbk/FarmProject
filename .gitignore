@@ -5,6 +5,7 @@
 .DS_Store
 # Log file
 *.log
+build
 
 # BlueJ files
 *.ctxt
