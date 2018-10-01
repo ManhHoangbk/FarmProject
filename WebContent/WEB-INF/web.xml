@@ -10,6 +10,16 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   
+  <servlet-mapping>
+		<servlet-name>senser</servlet-name>
+		<url-pattern>/senser</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>senser</servlet-name>
+		<servlet-class>com.hust.farmproject.serverlet.SenserSeverlet</servlet-class>
+	</servlet>
+  
   <servlet>
 		<servlet-name>mvc-dispatcher</servlet-name>
 		<servlet-class>

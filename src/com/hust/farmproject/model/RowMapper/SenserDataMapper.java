@@ -13,12 +13,12 @@ public class SenserDataMapper implements RowMapper{
 	public Object mapRow(ResultSet rs, int arg1) throws SQLException {
 		SenserData senserData = new SenserData();
 		senserData.setId(rs.getLong("id"));
-		senserData.setSenserId(rs.getLong("senserId"));
+		senserData.setSensor_id(rs.getLong("senserId"));
 		senserData.setCreateDate(rs.getLong("createDate"));
-		senserData.setDeviceId(rs.getLong("deviceId"));
-		senserData.setFarmId(rs.getLong("farmId"));
-		senserData.setName(rs.getString("name"));
-		senserData.setValue(rs.getDouble("value"));
+		senserData.setDevice_id(rs.getLong("deviceId"));
+		senserData.setFarm_id(rs.getLong("farmId"));
+		senserData.setSensor_name(rs.getString("name"));
+		senserData.setSensor_value(rs.getDouble("value"));
 		return senserData;
 	}
 
