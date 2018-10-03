@@ -23,6 +23,13 @@ public class HomeController  {
 	   return "home";
 	}
    
+   @RequestMapping(value = "/login", method = RequestMethod.GET)
+  	public String login(ModelMap model, HttpServletRequest req) throws UnknownHostException {
+  	   System.out.println("on controller");
+  	   DataEngine.getInstance(checkLocal(req));
+  		return "login";
+  	}
+   
    @RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(ModelMap model, HttpServletRequest req) throws UnknownHostException {
 	   System.out.println("on controller");
