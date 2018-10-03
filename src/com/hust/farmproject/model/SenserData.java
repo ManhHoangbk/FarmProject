@@ -1,6 +1,7 @@
 package com.hust.farmproject.model;
 
-public class SenserData {
+
+public class SenserData implements IBasic{
 
 	private Long id;
 	private Long sensor_id;// phần_cứng_có_Id
@@ -9,21 +10,44 @@ public class SenserData {
 	private Long device_id;
 	private Long farm_id;
 	private Long createDate;
-	
+
 	public static String createTable() {
-		String myTableName = "CREATE TABLE IF NOT EXISTS SenserData (" 
-				+ "id BIGINT(15) NOT NULL ,"
-				+ "sensor_id BIGINT(15) NOT NULL ,"
-				+ "sensor_name VARCHAR(60) ,"
-				+ "sensor_value DOUBLE ,"
-				+ "device_id BIGINT(15) NOT NULL ," 
-				+ "farm_id BIGINT(15) NOT NULL ," 
-				+ "createDate BIGINT(15) NOT NULL ," 
-				+ "PRIMARY KEY(id))";
+		String myTableName = "CREATE TABLE IF NOT EXISTS SenserData (" + "id BIGINT(15) NOT NULL AUTO_INCREMENT,"
+				+ "sensor_id BIGINT(15) NOT NULL ," + "sensor_name VARCHAR(60) ," + "sensor_value DOUBLE ,"
+				+ "device_id BIGINT(15) NOT NULL ," + "farm_id BIGINT(15) NOT NULL ,"
+				+ "createDate BIGINT(15) NOT NULL ," + "PRIMARY KEY(id))";
 		return myTableName;
 	}
 
 	public SenserData() {
+	}
+	
+	@Override
+	public String getColumSQL() {
+		String val = "sensor_id,sensor_name,sensor_value,device_id,farm_id,createDate";
+		return val;
+	}
+
+	@Override
+	public String getValueSQL() {
+		String val = "'" + this.getSensor_id() + "','" + this.getSensor_name() + "','"
+				+ this.getSensor_value() + "','" + this.getDevice_id() + "','" + this.getFarm_id() + "','"
+				+ this.getCreateDate() + "'";
+		return val;
+	}
+
+	@Override
+	public String insert() {
+		String query = "insert into SenserData(" + getColumSQL() + ") values (" + getValueSQL() + ")";
+		return query;
+	}
+
+	@Override
+	public String update() {
+		String val = "sensor_id='" + getSensor_id() + "',sensor_name='" + getSensor_name() + "',sensor_value='"
+				+ getSensor_value() + "',device_id='" + getDevice_id() + "',farm_id='" + getFarm_id()
+				+ "',createDate='" + getCreateDate() + "'";
+		return val;
 	}
 
 	public Long getId() {
@@ -81,6 +105,5 @@ public class SenserData {
 	public void setFarm_id(Long farm_id) {
 		this.farm_id = farm_id;
 	}
-	
-	
+
 }

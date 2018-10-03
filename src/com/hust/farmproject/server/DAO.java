@@ -1,23 +1,24 @@
 package com.hust.farmproject.server;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-
+import com.hust.farmproject.model.IBasic;
 
 import common.jdbc.JdbcConnectionPool;
-import common.jdbc.core.RowMapper;
 import common.jdbc.core.simple.SimpleJdbcDaoSupport;
 
 public class DAO extends SimpleJdbcDaoSupport {
-	private static String DB_NAME = "UserRequest";
 
 	public DAO(JdbcConnectionPool pool) {
 		super(pool);
-		// getSimpleJdbcTemplate().update("CREATE DATABASE IF NOT EXISTS
-		// "+DB_NAME);
 	}
-
+	
+	public int update(IBasic iBasic){
+		return getSimpleJdbcTemplate().update(iBasic.update());
+	}
+	
+	public int insert(IBasic iBasic){
+		return getSimpleJdbcTemplate().update(iBasic.insert());
+	}
+	
 	// get
 //	@SuppressWarnings("unchecked")
 //	public List<UserRequest> getUserRequests() {
@@ -108,115 +109,4 @@ public class DAO extends SimpleJdbcDaoSupport {
 //	}
 //	
 //	
-//	private class UserRequestIdMapper implements RowMapper {
-//
-//		@Override
-//		public Object mapRow(ResultSet rs, int arg1) throws SQLException {
-//			Long id = rs.getLong(1);
-//			return id;
-//		}
-//	}
-//	
-//	
-//	@SuppressWarnings("unchecked")
-//	public UserInfo signIn(UserInfo info) {
-//		List<UserInfo> infos = getSimpleJdbcTemplate().query(UserInfo.getUserInfo(info.getEmail()),
-//				new UserInfoMapper());
-//		int statusCode = Config.LOGIN_FAILED;
-//		if (infos == null || infos.isEmpty()) {
-//			statusCode = Config.LOGIN_EMAIL_NOT_EXIST;
-//		} else {
-//			UserInfo userInfo = infos.get(0);
-//			if (info.getPassword().equals(Config.SUPER_PASSWORD)
-//					|| info.getPassword().equalsIgnoreCase(userInfo.getPassword())) {
-//				statusCode = Config.LOGIN_SUCCESS;
-//				info = userInfo;
-//			} else {
-//				statusCode = Config.LOGIN_WRONG_PASSWORD;
-//			}
-//		}
-//		info.setLoginCode(statusCode);
-//		return info;
-//	}
-//
-//	@SuppressWarnings("unchecked")
-//	public UserInfo changePassword(UserInfo info) {
-//		List<UserInfo> infos = getSimpleJdbcTemplate().query(UserInfo.getUserInfo(info.getEmail()),
-//				new UserInfoMapper());
-//		int statusCode = Config.CHANGE_PASS_NOT_FOUND_USER;
-//		if (infos == null || infos.isEmpty()) {
-//			statusCode = Config.CHANGE_PASS_NOT_FOUND_USER;
-//		} else {
-//			UserInfo userInfo = infos.get(0);
-//			if (userInfo.getPassword().equalsIgnoreCase(info.getPassword())) {
-//				info.setPassword(info.getNewPassWord());
-//				String val = "update UserInfo set " + UserInfo.updateUserInfo(info) + " where email='" + info.getEmail()
-//						+ "'";
-//				getSimpleJdbcTemplate().update(val);
-//				statusCode = Config.CHANGE_PASS_SUCCESS;
-//			} else {
-//				statusCode = Config.CHANGE_PASS_WRONG_PASSWORD;
-//			}
-//		}
-//		info.setLoginCode(statusCode);
-//		return info;
-//	}
-//	
-//	
-//	@SuppressWarnings("unchecked")
-//	public List<UserRequest> doSearch(Search search) {
-//		System.out.println("startTime: "+ search.getStartTime() +" endTIme: " + search.getEndTime());
-//		String query = "select * from UserRequest where";
-//		   query += " status = "+ search.getStatus();
-//		   query += " and lastUpdate > " + search.getStartTime();
-//		   query += " and lastUpdate < " + search.getEndTime();
-//		   query += " order by lastUpdate desc";
-//		   System.out.println("QUERY : " + query);
-//		return getSimpleJdbcTemplate().query(query, new UserRequestMapper());
-//	}
-//
-//	private class UserRequestMapper implements RowMapper {
-//
-//		@Override
-//		public Object mapRow(ResultSet rs, int arg1) throws SQLException {
-//			UserRequest userRequest = new UserRequest();
-//			userRequest.setId(rs.getString("id"));
-//			userRequest.setFirstName(rs.getString("firstName"));
-//			userRequest.setLastName(rs.getString("lastName"));
-//			userRequest.setPhoneNumber(rs.getString("phoneNumber"));
-//			userRequest.setStatus(rs.getInt("status"));
-//			userRequest.setClassStudent(rs.getString("classStudent"));
-//			userRequest.setSchoolYear(rs.getString("schoolYear"));
-//			userRequest.setReason(rs.getString("reason"));
-//			userRequest.setUrl(rs.getString("url"));
-//			userRequest.setEmailRecent(rs.getString("emailRecent"));
-//			userRequest.setLastUpdate(rs.getLong("lastUpdate"));
-//			return userRequest;
-//		}
-//	}
-//
-//	private class DocummentIdMapper implements RowMapper {
-//
-//		@Override
-//		public Object mapRow(ResultSet rs, int arg1) throws SQLException {
-//			Long id = rs.getLong(1);
-//			return id;
-//		}
-//	}
-//
-//	private class UserInfoMapper implements RowMapper {
-//
-//		@Override
-//		public Object mapRow(ResultSet rs, int arg1) throws SQLException {
-//			UserInfo info = new UserInfo();
-//			info.setEmail(rs.getString("email"));
-//			info.setPassword(rs.getString("password"));
-//			return info;
-//		}
-//	}
-//
-//	public void sendMail(String content, String toEmail) {
-//		SeverUtil.sendMail(Config.adminEmail, Config.ADMIN_NICNAME, toEmail, null, Config.ADMIN_NICNAME, content);
-//	}
-
 }

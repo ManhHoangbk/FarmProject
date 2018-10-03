@@ -1,6 +1,6 @@
 package com.hust.farmproject.model;
 
-public class UserInfo {
+public class UserInfo implements IBasic{
 	private String account = "";
 	private String email = "";
 	private String password = "";
@@ -20,7 +20,7 @@ public class UserInfo {
 
 	public UserInfo() {
 	}
-
+	
 	public UserInfo(String email, String password) {
 		this.email = email;
 		this.password = password;
@@ -71,32 +71,35 @@ public class UserInfo {
 		return val;
 	}
 
-	public static String insert(UserInfo info) {
-		String query = "insert into UserInfo(" + getColumSQL() + ") values (" + getValueSQL(info) + ")";
-		return query;
-	}
-
-	private static String getColumSQL() {
-		String val = "email,password";
-		return val;
-	}
-
-	private static String getValueSQL(UserInfo user) {
-		String val = "'" + user.getEmail() + "','" + user.getPassword() + "'";
-		return val;
-	}
-
-	public static String updateUserInfo(UserInfo info) {
-		String val = "password='" + info.getPassword() + "'";
-		return val;
-	}
-
 	public String getNewPassWord() {
 		return newPassWord;
 	}
 
 	public void setNewPassWord(String newPassWord) {
 		this.newPassWord = newPassWord;
+	}
+
+	@Override
+	public String getColumSQL() {
+		String val = "email,password";
+		return val;
+	}
+
+	@Override
+	public String getValueSQL() {
+		String val = "'" + this.getEmail() + "','" + this.getPassword() + "'";
+		return val;
+	}
+
+	@Override
+	public String insert() {
+		String query = "insert into UserInfo(" + getColumSQL() + ") values (" + getValueSQL() + ")";
+		return query;
+	}
+
+	@Override
+	public String update() {
+		return null;
 	}
 
 }
