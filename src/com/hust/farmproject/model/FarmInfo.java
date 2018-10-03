@@ -1,6 +1,6 @@
 package com.hust.farmproject.model;
 
-public class FarmInfo {
+public class FarmInfo implements IBasic{
 
 	private Long id;
 	private String name = "";
@@ -12,7 +12,7 @@ public class FarmInfo {
 
 	public static String createTable() {
 		String myTableName = "CREATE TABLE IF NOT EXISTS FarmInfo (" 
-				+ "id BIGINT(20) NOT NULL ," + "name VARCHAR(60) ,"
+				+ "id BIGINT(20) NOT NULL AUTO_INCREMENT," + "name VARCHAR(60) ,"
 				+ "addr VARCHAR(100) ," 
 				+ "lastUpdate BIGINT(20)," 
 				+ "PRIMARY KEY(id))";
@@ -49,6 +49,29 @@ public class FarmInfo {
 
 	public void setLastUpdate(long lastUpdate) {
 		this.lastUpdate = lastUpdate;
+	}
+
+	@Override
+	public String getColumSQL() {
+		return "id,name,addr,lastUpdate";
+	}
+
+	@Override
+	public String getValueSQL() {
+		String val = "'" + getId() + "','" + getName() + "','" + getAddr() + "','"
+				+ getLastUpdate() + "'";
+		return val;
+	}
+
+	@Override
+	public String insert() {
+		String query = "insert into FarmInfo(" + getColumSQL() + ") values (" + getValueSQL() + ")";
+		return query;
+	}
+
+	@Override
+	public String update() {
+		return "name='" + getName() + "',addr='" + getAddr() + "',lastUpdate='" + getLastUpdate() + "'";
 	}
 
 }

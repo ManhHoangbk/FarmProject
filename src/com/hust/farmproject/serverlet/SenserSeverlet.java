@@ -14,6 +14,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.hust.farmproject.model.SenserData;
+import com.hust.farmproject.server.DataEngine;
 
 public class SenserSeverlet extends HttpServlet {
 
@@ -31,18 +32,20 @@ public class SenserSeverlet extends HttpServlet {
 		super.doPost(req, resp);
 		System.out.println("SenserServerlet doPost");
 		JsonObject object = getJsonObject(req, resp);
-		System.out.println("data: "+ object);
-		Long farmId = getLong(object, "farm_id");
-		Long deviceId = getLong(object, "device_id");
+		Long farm_id = getLong(object, "farm_id");
+		Long device_id = getLong(object, "device_id");
 		Long time = getLong(object, "timestamp");
 		String senserDataStr = getArrays(object, "sensors_data");
 		if(senserDataStr != null && !senserDataStr.isEmpty()){
 			List<SenserData> senserDatas = new Gson().fromJson(senserDataStr, new TypeToken<List<SenserData>>(){}.getType());
 			for (SenserData senserData : senserDatas) {
-				System.out.println("sen: "+ senserData.getSensor_name());
+				senserData.setDevice_id(device_id);
+				senserData.setFarm_id(farm_id);
+				senserData.setCreateDate(time);
+				int status = DataEngine.getInstance().getDao().insert(senserData);
+				System.out.println("status: "+ status);
 			}
 		}
-		
 		resp.getWriter().write("");
 	}
 	
