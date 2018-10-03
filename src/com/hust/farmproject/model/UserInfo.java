@@ -17,7 +17,7 @@ public class UserInfo implements IBasic{
 				+ "PRIMARY KEY(account))";
 		return myTableName;
 	}
-
+	
 	public UserInfo() {
 	}
 	
@@ -78,16 +78,16 @@ public class UserInfo implements IBasic{
 	public void setNewPassWord(String newPassWord) {
 		this.newPassWord = newPassWord;
 	}
-
+	
 	@Override
 	public String getColumSQL() {
-		String val = "email,password";
+		String val = "account,email,roleType,password";
 		return val;
 	}
 
 	@Override
 	public String getValueSQL() {
-		String val = "'" + this.getEmail() + "','" + this.getPassword() + "'";
+		String val = "'" + this.getAccount() + "','"+ this.getEmail() + "','"+ this.getRoleType() + "','" + this.getPassword() + "'";
 		return val;
 	}
 

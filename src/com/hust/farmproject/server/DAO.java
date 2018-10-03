@@ -1,6 +1,10 @@
 package com.hust.farmproject.server;
 
+import java.util.List;
+
 import com.hust.farmproject.model.IBasic;
+import com.hust.farmproject.model.UserInfo;
+import com.hust.farmproject.model.RowMapper.UserInfoMapper;
 
 import common.jdbc.JdbcConnectionPool;
 import common.jdbc.core.simple.SimpleJdbcDaoSupport;
@@ -17,6 +21,16 @@ public class DAO extends SimpleJdbcDaoSupport {
 	
 	public int insert(IBasic iBasic){
 		return getSimpleJdbcTemplate().update(iBasic.insert());
+	}
+	
+	public UserInfo login(String userName, String password){
+		String sql = "Select * from UserInfo where account='"+ userName +"' and password='"+ password +"'";
+		List<UserInfo> infos = getSimpleJdbcTemplate().query(sql, new UserInfoMapper());
+		UserInfo userInfo = null;
+		if(infos != null && !infos.isEmpty()){
+			userInfo = infos.get(0);
+		}
+		return userInfo;
 	}
 	
 	// get
